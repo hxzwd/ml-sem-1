@@ -1,0 +1,11 @@
+.PHONY=test test2
+
+A=a b c
+B=1 2 3
+C=$(A) $(B)
+
+test2:
+	@echo $(A)
+	@echo $(C)
+
+test: test2	
