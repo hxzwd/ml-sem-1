@@ -1,0 +1,10 @@
+#print "debug pscx_main"
+file pscx_main
+#list pscx_cpu.cpp:Cpu::runNextInstuction
+#break pscx_cpu.cpp:Cpu::runNextInstuction
+list pscx_cpu.cpp:Cpu::runNextInstruction
+break pscx_cpu.cpp:Cpu::runNextInstruction
+#run
+#print/x m_pc
+#x/32xw &m_regs
+

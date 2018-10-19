@@ -118,7 +118,7 @@ struct Cpu
 		"INSTRUCTION_TYPE_BNE",\
 		"INSTRUCTION_TYPE_ADDI",\
 		"INSTRUCTION_TYPE_LW",\
-		"INSTRUCTION_TYPE_UNKNOWN" 
+		"INSTRUCTION_TYPE_UNKNOWN"
 	};
 
 
@@ -150,7 +150,7 @@ struct Cpu
 	void store32(uint32_t addr, uint32_t value);
 
 	InstructionType decodeAndExecute(Instruction instruction);
-	InstructionType runNextInstuction();
+	InstructionType runNextInstruction();
 
 	// Load Upper Immediate
 	InstructionType opcodeLUI(Instruction instruction);
@@ -164,10 +164,17 @@ struct Cpu
 	uint32_t getRegisterValue(uint32_t index) const;
 	void setRegisterValue(uint32_t index, uint32_t value);
 
+	int m_debug_size;
+	std::vector<std::string> m_debug_info;
 	std::vector<uint32_t> dumpCpuRegs();
 	void printDebugInfo(std::string message);
 	void printDebugInfo(std::string message, std::string prefix);
+	std::string sprintDebugInfo0(std::string message);
+	std::string sprintDebugInfo1(std::string message, std::string prefix);
 	void decodeAndExecuteDebug(std::vector<uint32_t> old_regs, Instruction instruction, InstructionType InstructionType);
+	std::string sdecodeAndExecuteDebug(std::vector<uint32_t> old_regs, Instruction instruction, InstructionType InstructionType);
+	void storeDebugInfo(std::string debug_info);
+
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

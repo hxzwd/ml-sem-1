@@ -29,11 +29,14 @@ int main()
 	Interconnect interconnect(bios);
 	Cpu cpu(interconnect);
 
+//	cpu.m_debug_size = 5;
+//	cpu.m_debug_info.resize(cpu.m_debug_info);
+//	cpu.m_debug_info.clear()
 
 	disasm_main(0xbfc00000);
 
 
-	while (cpu.runNextInstuction() != Cpu::INSTRUCTION_TYPE_UNKNOWN);
+	while (cpu.runNextInstruction() != Cpu::INSTRUCTION_TYPE_UNKNOWN);
 
 	return EXIT_SUCCESS;
 }

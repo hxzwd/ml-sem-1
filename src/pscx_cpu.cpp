@@ -126,6 +126,7 @@ Cpu::InstructionType Cpu::decodeAndExecute(Instruction instruction)
 
 #ifdef D_CPU_DEBUG
 	decodeAndExecuteDebug(old_regs, instruction, instructionType);
+//	storeDebugInfo(sdecodeAndExecuteDebug(old_regs, instruction, instructionType));
 #endif
 
 	return instructionType;
@@ -141,7 +142,7 @@ void Cpu::decodeAndExecuteDebug(std::vector<uint32_t> old_regs, Instruction inst
 	std::string str_decoded = decode(tmp_instruction);
 	std::vector<uint32_t> v_used_regs = get_used_regs(tmp_instruction);
 
-	char tmp_buf[1024] = { 0 };
+	char tmp_buf[1024] = { 0 };//pnryabov
 	sprintf(tmp_buf, "%08X", instruction.m_instruction);
 
 	printDebugInfo("0x" + std::string(tmp_buf), std::string("[INSTRUCTION]:"));
@@ -170,8 +171,70 @@ void Cpu::printDebugInfo(std::string message, std::string prefix)
 
 }
 
-Cpu::InstructionType Cpu::runNextInstuction()
-{ 
+
+std::string Cpu::sdecodeAndExecuteDebug(std::vector<uint32_t> old_regs, Instruction instruction, InstructionType instructionType)
+{
+	std::string debug_info("");
+	if(instructionType == INSTRUCTION_TYPE_UNKNOWN)
+	{
+		debug_info += sprintDebugInfo1("***NEXT INSTRUCTION IS UNKNOWN***", "\n");
+	}
+	InstructionDisasm tmp_instruction(instruction.m_instruction);
+	std::string str_decoded = decode(tmp_instruction);
+	std::vector<uint32_t> v_used_regs = get_used_regs(tmp_instruction);
+
+	char tmp_buf[1024] = { 0 };//pnryabov
+	sprintf(tmp_buf, "%08X", instruction.m_instruction);
+
+	debug_info += sprintDebugInfo1("0x" + std::string(tmp_buf), std::string("[INSTRUCTION]:"));
+	debug_info += sprintDebugInfo1(str_decoded, "[DISASM]:");
+	debug_info += sprintf(tmp_buf, "%08X\t\t[PREV $PC: 0x%08X]", m_pc, old_regs[old_regs.size() - 1]);
+	debug_info += sprintDebugInfo1("REG $PC: 0x" + std::string(tmp_buf), std::string("[PC REG]:"));
+
+	for(uint32_t i = 0; i != v_used_regs.size(); i++)
+	{
+		sprintf(tmp_buf, "REG $%d: 0x%08X\t\t[PREV $%d: 0x%08X]", v_used_regs[i], m_regs[v_used_regs[i]], v_used_regs[i], old_regs[v_used_regs[i]]);
+		debug_info += sprintDebugInfo1(tmp_buf, std::string("[USED REGS]:"));
+	}
+
+	return debug_info;
+}
+
+
+std::string Cpu::sprintDebugInfo0(std::string message)
+{
+	char buffer[1024] = { 0 };
+	sprintf(buffer, "[DEBUG INFO]:\t%s\n", message.c_str());
+	return std::string(buffer);
+}
+
+std::string Cpu::sprintDebugInfo1(std::string message, std::string prefix)
+{
+
+	char buffer[1024] = { 0 };
+	sprintf(buffer, "%s\t%s\n", prefix.c_str(), message.c_str());
+	return std::string(buffer);
+}
+
+void Cpu::storeDebugInfo(std::string debug_info)
+{
+	uint32_t current_size = m_debug_info.size();
+	if(current_size == m_debug_size)
+	{
+		for(int i = 0; i < m_debug_size - 1; i++)
+		{
+			m_debug_info[i] = m_debug_info[i + 1];
+		}
+		m_debug_info[m_debug_size - 1] = debug_info;
+	}
+	else
+	{
+		m_debug_info[current_size] = debug_info;
+	}
+}
+
+Cpu::InstructionType Cpu::runNextInstruction()
+{
 
 	uint32_t pc = m_pc;
 

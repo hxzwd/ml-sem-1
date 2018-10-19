@@ -1,7 +1,7 @@
 
-.PHONY=clean all test disasm
+.PHONY=clean all test disasm debug
 CC=g++
-CFLAGS=-c -Wall -std=c++11
+CFLAGS=-c -g -Wall -std=c++11
 LDFLAGS=
 ROOT_DIR=$(shell pwd)
 BIN_DIR=bin
@@ -30,4 +30,8 @@ $(EXECUTABLE): $(OBJECTS)
 	
 clean:
 	rm -rf *.o $(EXECUTABLE)
+
+
+debug:
+	gdb -x debug_cmds.txt
 
