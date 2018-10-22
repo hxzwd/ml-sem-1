@@ -1,5 +1,0 @@
-
-hexdump roms/SCPH1001.bin -n 256 -v -e '4/4 "%08X\t"' -e '1/16 "\n"'
-hexdump roms/SCPH1001.bin -n 256 -v -C
-
-
