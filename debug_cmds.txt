@@ -1,10 +1,71 @@
+#printf "%s\n", "DEBUG WITH GDB TUTORIAL"
+#1. Print m_pc register in hex format
+#	print/x m_pc
+#2. Disassemble and print MIPS instruction
+#	set var $q=m_disasm.decode(m_nextInstruction)
+#	printf "%s\n", (char *)$q._M_dataplus._M_p
+#3. Print RAM size in hex format
+#	print/x m_inter.m_ram.m_data.size()
+#4. Print RAM data in hex words format (128 is amount of words; 32 is offset)
+#	set $y=m_inter.m_ram.m_data.data()
+#	x/128xw $y + 32
+#5. Print $R12 register in hex format
+#	print/x m_regs[12]
+#6. Print array Cpu::m_regs of registers $R[0-31] in hex format
+#	x/32xw m_regs
+#7. Load executable file
+#	file pscx_main
+#8. Show all breakpoints
+#	info breakpoints
+#9. Set break point on function in source file
+#	break pscx_cpu.cpp:Cpu::runNextInstruction
+#10. Set number of printing lines to 20
+#	set listsize 20
+#11. Print lines around function or around lines with selected index in source file
+#	list pscx_cpu.cpp:Cpu::decodeAndExecute
+#	list src/pscx_cpu.cpp:Cpu::load32
+#	list pscx_cpu.cpp:143
+#12. Start program and stop on first breakpoint
+#	run
+#13. Continue execution of program after breakpoint and stop on next breakpoint
+#	continue
+#14. Execute one line of code
+#	step
+#15. Show backtrace of all stack frames
+#	backtrace 
+#16. Print command line arguments of program
+#	show args
+#17. Print local variables
+#	info locals
+#18. Print current frame info
+#	info frame
+#19. Print stack frame (show current line and file in source file)
+#	frame
+#
+#
+#
+#Old code:
+###########################################################
+###########################################################
+###########################################################
+#
 #print "debug pscx_main"
-file pscx_main
+#file pscx_main
 #list pscx_cpu.cpp:Cpu::runNextInstuction
 #break pscx_cpu.cpp:Cpu::runNextInstuction
-list src/pscx_cpu.cpp:Cpu::runNextInstruction
-break src/pscx_cpu.cpp:Cpu::runNextInstruction
+#
+#list src/pscx_cpu.cpp:Cpu::runNextInstruction
+#break src/pscx_cpu.cpp:Cpu::runNextInstruction
+#
 #run
 #print/x m_pc
 #x/32xw &m_regs
+#
+###########################################################
+###########################################################
+###########################################################
+
+list src/pscx_cpu.cpp:Cpu::runNextInstruction
+break src/pscx_cpu.cpp:Cpu::runNextInstruction
+
 

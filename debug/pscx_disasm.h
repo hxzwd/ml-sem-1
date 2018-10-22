@@ -29,13 +29,12 @@
 			"0x" << std::setfill('0') << std::uppercase << std::setw(4) << std::hex << x
 #define HEXB(x)\
 			"0x" << std::setfill('0') << std::uppercase << std::setw(2) << std::hex << x
-const size_t force_info_buffer_size = 256;
 
 
 using namespace pscx_memory;
 
 
-struct MipsDisasm
+struct MipsDisasm 
 {
 
 	#ifdef format_string
@@ -54,7 +53,6 @@ struct MipsDisasm
  	bool is_enabled;
  	std::string m_format;
  	uint32_t m_index;
-	char force_info_buffer[force_info_buffer_size];
 
 	struct InstructionDisasm
 	{
@@ -103,7 +101,7 @@ struct MipsDisasm
 
 	std::map<std::string, std::string> get_instruction(Instruction instruction);
 	void print_decode(Instruction instruction);
-	void force_get_instruction(Instruction instruction);
+
 
 	char * op_sll(InstructionDisasm instruction);
 	char * op_srl(InstructionDisasm instruction);

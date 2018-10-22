@@ -207,7 +207,7 @@ std::string MipsDisasm::decode_(Instruction i_instruction)
 		printf("CAN NOT MALLOC MEMORY!!!!!\nNULL RETURNED\n");
 		return decode_error;
 	}
-
+	
 	std::string disasm_command(opcode_str);
 	free(opcode_str);
 
@@ -271,7 +271,7 @@ std::vector<uint32_t> MipsDisasm::touched_regs(Instruction instruction)
 
 std::map<std::string, std::string> MipsDisasm::get_instruction(Instruction instruction)
 {
-
+	
 	std::string decoded = decode(instruction);
 	std::vector<uint32_t> regs_info = touched_regs(instruction);
 
@@ -318,7 +318,7 @@ void MipsDisasm::print_decode(Instruction instruction)
 		for(std::map<std::string, std::string>::iterator it = info.begin(); it != info.end(); ++it)
 		{
 			std::cout << it->first << ":\t" << it->second << std::endl;
-		}
+		}		
 
 	}
 	if(m_format == "single-line")
@@ -327,24 +327,6 @@ void MipsDisasm::print_decode(Instruction instruction)
 		std::cout << m_index << ": " << info["opcode"] << "\t" << info["decode"] << "\t" << " ## " << info["regs"] << std::endl;
 	}
 }
-
-
-
-void MipsDisasm::force_get_instruction(Instruction instruction)
-{
-	std::map<std::string, std::string> info = get_instruction(instruction);
-	std::stringstream tmp_str;
-	tmp_str.str("");
-	for(std::map<std::string, std::string>::iterator it = info.begin(); it != info.end(); ++it)
-	{
-		tmp_str << it->first << ":\t" << it->second << std::endl;
-	}
-
-	memset(force_info_buffer, 0, force_info_buffer_size);
-	sprintf(force_info_buffer, "%s\n", tmp_str.str().c_str());
-
-}
-
 
 
 char * MipsDisasm::reg(RegisterIndex idx)

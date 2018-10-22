@@ -9,7 +9,7 @@
 
 #include <vector>
 #include <string>
-#include <iterator>
+
 
 
 struct ArgSetParser
@@ -104,43 +104,14 @@ static bool compareGoldenWithDump(const Cpu& cpu)
 int main(int argc, char** argv)
 {
 	ArgSetParser parser(argc, argv);
-//	const std::vector<std::string>& args = parser.args();
-	std::vector<std::string> args = parser.args();
-	std::string biosPath = std::string("roms/SCPH1001.BIN");
-	int32_t flag_default_bios_path = -1;
+	const std::vector<std::string>& args = parser.args();
 
-	for(int i = 1; i < args.size(); i++)
-	{
-		if(args[i].c_str()[0] != '-')
-			flag_default_bios_path = i;
-	}
-
-	if(flag_default_bios_path >= 0)
-		biosPath = args[flag_default_bios_path];
-
-	args.push_back(args[1]);
-	args.push_back(biosPath);
-
-/*
-
-	if(args.size() < 2)
-	{
-		std::cout << "Using default BIOS BIN path: roms/SCPH1001.BIN" << std::endl;
-	}
-	else
-	{
-		biosPath = args[1];
-	}
-*/
-/*
 	// Should be two arguments at least
 	if (args.size() < 2)
 		printUsageAndExit(args[0].c_str());
 
-
 	// Path to the BIOS
 	std::string biosPath = args[1];
-*/
 
 	bool dumpInstructionsAndRegsToFile = false;
 	bool runTesting                    = false;
