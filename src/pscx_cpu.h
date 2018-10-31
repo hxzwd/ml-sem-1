@@ -30,7 +30,6 @@ struct Cpu
 	}
 
 
-
 	enum InstructionType
 	{
 		INSTRUCTION_TYPE_LUI,

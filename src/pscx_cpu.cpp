@@ -152,7 +152,7 @@ Cpu::InstructionType Cpu::runNextInstruction()
 	}
 
 	m_disasm.print_decode(m_nextInstruction);
-		
+
 
 	m_pc += 4;
 
@@ -220,6 +220,8 @@ Cpu::InstructionType Cpu::opcodeSLL(const Instruction& instruction)
 	uint32_t value = getRegisterValue(target_reg) << imm_val;
 
 	setRegisterValue(target_reg, value);
+//	setRegisterValue(dest_reg, value);		/*????????????????????????*/
+
 
 	return INSTRUCTION_TYPE_SLL;
 

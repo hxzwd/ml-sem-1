@@ -18,14 +18,15 @@ SOURCES=pscx_bios.cpp pscx_cpu.cpp pscx_instruction.cpp pscx_interconnect.cpp ps
 HEADERS=pscx_bios.h pscx_cpu.h pscx_instruction.h pscx_interconnect.h pscx_common.h pscx_memory.h pscx_ram.h pscx_cachecontrol.h pscx_disasm.h
 OBJECTS_DEBUG=$(SOURCES:.cpp=.o)
 OBJECTS=$(addprefix $(OBJPATH)/,$(SOURCES:.cpp=.o))
+HEADERS_H=$(addprefix $(SRCPATH)/,$(HEADERS))
 EXECUTABLE=pscx_main
 
-all: $(EXECUTABLE)
+all: $(EXECUTABLE) 
 
 $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $(OBJECTS) -o $(EXECUTABLE)
 
-obj/%.o: src/%.cpp
+obj/%.o: src/%.cpp $(HEADERS_H)
 	$(CC) $(CFLAGS) $< -o $@
 
 clean:

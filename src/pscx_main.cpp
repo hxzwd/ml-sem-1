@@ -106,6 +106,12 @@ int main(int argc, char** argv)
 	ArgSetParser parser(argc, argv);
 //	const std::vector<std::string>& args = parser.args();
 	std::vector<std::string> args = parser.args();
+
+	if(args.size() == 1)
+	{
+		printUsageAndExit(args[0].c_str());
+	}
+
 	std::string biosPath = std::string("roms/SCPH1001.BIN");
 	int32_t flag_default_bios_path = -1;
 
@@ -120,6 +126,7 @@ int main(int argc, char** argv)
 
 	args.push_back(args[1]);
 	args.push_back(biosPath);
+
 
 /*
 
